@@ -1,0 +1,5 @@
+.wttd
+eventex/core/static/
+db.sqlite3
+**/__pycache__
+mystaticfiles
