@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.conf import settings
 from subscriptions.forms import SubscriptionForm
 from subscriptions.models import Subscription
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, Http404
 from django.core import mail
 from django.template.loader import render_to_string
 from django.contrib import messages
@@ -37,7 +37,11 @@ def new(request):
     return render(request, 'subscriptions/subscription_form.html', {'form': SubscriptionForm()})
 
 def detail(request, pk):
-    subscription = Subscription.objects.get(pk=pk)
+    try:
+        subscription = Subscription.objects.get(pk=pk)
+    except Subscription.DoesNotExist:
+        raise Http404
+
     return render(request, 'subscriptions/subscription_detail.html', {'subscription': subscription})
 
 def _send_mail(subject, from_, to, template_name, context):
