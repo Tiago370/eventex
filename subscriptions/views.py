@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, resolve_url as r
 from django.conf import settings
 from subscriptions.forms import SubscriptionForm
 from subscriptions.models import Subscription
@@ -7,11 +7,13 @@ from django.core import mail
 from django.template.loader import render_to_string
 from django.contrib import messages
 
-def subscribe(request):
+def new(request):
     if request.method == 'POST':
         return create(request)
-    else:
-        return new(request)
+    return empty_form(request)
+
+def empty_form(request):
+    return render(request, 'subscriptions/subscription_form.html', {'form': SubscriptionForm()})
 
 def create(request):
     form = SubscriptionForm(request.POST)
@@ -31,10 +33,7 @@ def create(request):
     #Success feedback
     messages.success(request, 'Inscrição realizada com sucesso!')
 
-    return HttpResponseRedirect('/inscricao/{}/'.format(subscription.pk))
-
-def new(request):
-    return render(request, 'subscriptions/subscription_form.html', {'form': SubscriptionForm()})
+    return HttpResponseRedirect(r('subscriptions:detail', subscription.pk))
 
 def detail(request, pk):
     try:

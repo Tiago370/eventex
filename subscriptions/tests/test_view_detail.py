@@ -1,5 +1,6 @@
 from django.test import TestCase
 from subscriptions.models import Subscription
+from django.shortcuts import resolve_url as r
 
 class SubscriptionDetailGet(TestCase):
     def setUp(self):
@@ -9,7 +10,7 @@ class SubscriptionDetailGet(TestCase):
             email='joaomartelo@emp.com.br',
             phone='35-36238089'
         )
-        self.response = self.client.get('/inscricao/{}/'.format(self.obj.pk))
+        self.response = self.client.get(r('subscriptions:detail', self.obj.pk))
 
     def test_get(self):
         self.assertEqual(200, self.response.status_code)
@@ -31,5 +32,5 @@ class SubscriptionDetailGet(TestCase):
 
 class SubscriptionDetailNotFound(TestCase):
     def test_not_found(self):
-        response = self.client.get('inscricao/0/')
+        response = self.client.get(r('subscriptions:detail', 0))
         self.assertEqual(404, response.status_code)
