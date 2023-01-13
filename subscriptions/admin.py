@@ -13,7 +13,7 @@ class SubscriptionModelAdmin(admin.ModelAdmin):
         cd = obj.created_at
         agora = now().date()
         #return obj.created_at == now().date()
-        return (cd.year, cd.month, cd.day) == (agora.year, cd.month, cd.day)
+        return (cd.year, cd.month, cd.day) == (agora.year, agora.month, agora.day)
     subscribed_today.short_description = 'inscrito hoje?'
     subscribed_today.boolean = True
 
