@@ -57,6 +57,21 @@ class SubscritpionsNewGet(TestCase):
         form = self.make_validated_form(name='TIAGO amaral')
         self.assertEqual('Tiago Amaral', form.cleaned_data['name'])
 
+    def test_email_is_optional(self):
+        """Email is optional"""
+        form = self.make_validated_form(email='')
+        self.assertFalse(form.errors)
+
+    def test_phone_is_optional(self):
+        """Phone is optional"""
+        form = self.make_validated_form(phone='')
+        self.assertFalse(form.errors)
+
+    def test_must_inform_email_or_phone(self):
+        """Email and Phone are optional, but one must be informed"""
+        form = self.make_validated_form(phone='', email='')
+        self.assertListEqual(['__all__'], list(form.errors))
+
     def make_validated_form(self, **kwargs):
         valid = dict(
             name='Rafael Henrique da Silva Correia', cpf='12345678901',
@@ -133,3 +148,8 @@ class SubscritpionsNewPostInvalid(TestCase):
     def test_dont_save_subscription(self):
         self.assertFalse(Subscription.objects.exists())
 
+class TemplateRegressionTest(TestCase):
+    def test_template_has_nonn_field_errors(self):
+        invalid_data = dict(name='Tiago Rafael', cpf='12345654567')
+        response = self.client.post(r('subscriptions:new'), invalid_data)
+        self.assertContains(response, '<ul class="errorlist nonfield">')
