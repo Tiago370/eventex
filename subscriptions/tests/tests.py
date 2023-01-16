@@ -41,6 +41,30 @@ class SubscritpionsNewGet(TestCase):
         form = self.response.context["form"]
         self.assertSequenceEqual(['name', 'cpf', 'email', 'phone'], list(form.fields))
 
+    def test_cpf_has_11_digits(self):
+        """CPF must only asscept digits."""
+        form = self.make_validated_form(cpf='ABCD5678901')
+        self.assertFormErrorCode(form, 'cpf', 'digits')
+
+    def test_cpf_has_11_digits(self):
+        """CPF must have 11 digits."""
+        form = self.make_validated_form(cpf='12345')
+        self.assertFormErrorCode(form, 'cpf', 'length')
+
+    def make_validated_form(self, **kwargs):
+        valid = dict(
+            name='Rafael Henrique da Silva Correia', cpf='12345678901',
+            email='rafael@abraseucodigo.com.br', phone='00-90000-9000')
+        data = dict(valid, **kwargs)
+        form = SubscriptionForm(data)
+        form.is_valid()
+        return form
+    
+    def assertFormErrorCode(self, form, field, code):
+        errors = form.errors.as_data()
+        errors_list = errors[field]
+        exception = errors_list[0]
+        self.assertEqual(code, exception.code)
 
 class SubscritpionsNewPostValid(TestCase):
     def setUp(self):
