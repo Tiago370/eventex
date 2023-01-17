@@ -46,6 +46,7 @@
                     <a href="javascript:void(0);" class="nav-mobile"><i class="fa fa-bars"></i></a>
                     <ul>
                         <li><a data-scroll href="{% url 'home' %}#overview">Conferência</a></li>
+                        <li><a data-scroll href="{% url 'home' %}#speakers">Palestrantes</a></li>
                         <li><a data-scroll href="{% url 'home' %}#sponsors">Patrocinadores</a></li>
                         <li><a data-scroll href="{% url 'home' %}#register">Inscrição</a></li>
                         <li><a data-scroll href="{% url 'home' %}#venue">Local</a></li>
@@ -72,7 +73,19 @@
             	<p><a class="btn-basic btn-blue" data-scroll href="#register">Garanta a sua vaga!</a></p>
             </div>
         </section>
-
+        <section id="speakers text-align-center row dektop-8 padding-bottom-2 container">
+            <div class="speakers">
+                <h2>Palestrantes Convidados</h2>
+                <div class="desktop-4">
+                    <img src="{% static 'img/hopper.png' %}"  height=259>
+                    <h4>Grace Hopper</h4>
+                </div>
+                <div class="desktop-4">
+                    <img src="{% static 'img/turing.png' %}" height=259>
+                    <h4>Alan Turing</h4>    
+                </div>
+            </div>
+        </section>
         <!-- SPONSORS -->
         <section id="sponsors">
         	<div class="sponsors text-align-center row desktop-12 min-h-28 padding-bottom-2 container">
