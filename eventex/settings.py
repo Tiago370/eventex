@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'test_without_migrations',
     'subscriptions',
+    'core',
 ]
 
 MIDDLEWARE = [
