@@ -1,14 +1,19 @@
 from django.test import TestCase
 from django.shortcuts import resolve_url as r
-from core.models import Talk
+from core.models import Talk, Speaker
 
 class TalkListGet(TestCase):
     def setUp(self):
-        Talk.objects.create(title='Título da Palestra', start='10:00',
+        t1 = Talk.objects.create(title='Título da Palestra', start='10:00',
                             description='Descrição da palestra.')
-        Talk.objects.create(title='Título da Palestra', start='13:00',
+        t2 = Talk.objects.create(title='Título da Palestra', start='13:00',
                             description='Descrição da palestra.')
 
+        speaker = Speaker.objects.create(name='a123',
+        slug='tiago-rafael', photo='https://www.instagram.com/tiago-rafael/')
+
+        t1.speakers.add(speaker)
+        t2.speakers.add(speaker)
 
         self.response = self.client.get(r('talk_list'))
 
@@ -23,7 +28,7 @@ class TalkListGet(TestCase):
             (2, 'Título da Palestra'),
             #(1, '10:00'),
             #(1, '13:00'),
-            (2, 'palestrantes/tiago-amaral/'),
+            (2, 'palestrantes/tiago-rafael/'),
             (2, 'Descrição da palestra'),
         ]
 

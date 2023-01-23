@@ -16,7 +16,9 @@ class Speaker(models.Model):
         return self.name
     
     def get_aboslute_url(self):
+        print(r('speaker_detail', slug=self.slug))
         return r('speaker_detail', slug=self.slug)
+
 
 class Contact(models.Model):
     EMAIL = 'E'
@@ -41,6 +43,8 @@ class Talk(models.Model):
     title = models.CharField(max_length=200)
     start = models.TimeField()
     description = models.TextField()
+    speakers = models.ManyToManyField('Speaker')
+
 
     def __str__(self):
         return str(self.start)
