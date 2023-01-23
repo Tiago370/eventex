@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import resolve_url as r
 
 class Speaker(models.Model):
     name = models.CharField('nome', max_length=225)
@@ -35,3 +36,11 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.value
+    
+class Talk(models.Model):
+    title = models.CharField(max_length=200)
+    start = models.TimeField()
+    description = models.TextField()
+
+    def __str__(self):
+        return str(self.start)

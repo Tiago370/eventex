@@ -1,0 +1,22 @@
+{% extends 'subscriptions/base.html' %}
+
+{% block content %}
+<section>
+    <div class="talks content row padding-bottom-3 desktop-12 container">
+
+        <h2>Manhã</h2>
+        {% for talk in morning_talks %}
+            <h3>{{ talk.start }} - {{ talk.title }} </h3>
+            <h4>Por <a href="/palestrantes/tiago-amaral/">Henrique Bastos</a></h4>
+            <p>{{ talk.description }}</p>
+        {% endfor %}
+
+        <h2>Tarde</h2>
+        {% for talk in afternoon_talks %}
+            <h3>{{ talk.start }} - {{ talk.title }} </h3>
+            <h4>Por <a href="/palestrantes/tiago-amaral/">Henrique Bastos</a></h4>
+            <p>{{ talk.description }}</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}
